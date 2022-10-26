@@ -1,0 +1,256 @@
+<mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{formGroup.getRawValue().id ? 'Update' : 'Add'}} Danh Mục
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="row form-group">
+        <div class="col-12">
+            <form class="row" [formGroup]="formGroup" (ngSubmit)="doSubmit()">
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Loại danh mục</mat-label>
+                        <mat-select formControlName="maDm">
+                            <mat-option *ngFor="let item of itemDM" [value]="item.id">
+                                {{item.id}} - {{item.tenTv}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Mã Danh Mục</mat-label>
+                        <input matInput formControlName="ma" type="text" class="w-100">
+                        <app-inline-message [formName]="formGroup.get('ma')" [message]="'Name'">
+                        </app-inline-message>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Tên Tiếng Việt</mat-label>
+                        <input matInput formControlName="tenTv" type="text" class="w-100">
+                        <app-inline-message [formName]="formGroup.get('tenTv')" [message]="'Name'">
+                        </app-inline-message>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Tên Tiếng Anh</mat-label>
+                        <input matInput formControlName="tenEn" type="text" class="w-100">
+                        <app-inline-message [formName]="formGroup.get('tenTv')" [message]="'Name'">
+                        </app-inline-message>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Thứ tự</mat-label>
+                        <input matInput formControlName="thuTu" type="number" class="w-100">
+                        <app-inline-message [formName]="formGroup.get('thuTu')" [message]="'Name'">
+                        </app-inline-message>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Nhóm</mat-label>
+                        <input matInput formControlName="nhom" type="text" class="w-100">
+                        <app-inline-message [formName]="formGroup.get('nhom')" [message]="'Name'">
+                        </app-inline-message>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Ngày Hiệu Lực</mat-label>
+                        <input matInput type="date" formControlName="ngayHl" rows="3"/>
+                        <app-inline-message [formName]="formGroup.get('ngayHl')" [message]="'Name'">
+                        </app-inline-message>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-form-field class="w-100" appearance="outline">
+                        <mat-label>Ngày Hết Hiệu Lực</mat-label>
+                        <input matInput type="date" formControlName="ngayHhl" rows="3"/>
+                        <app-inline-message [formName]="formGroup.get('ngayHhl')" [message]="'Name'">
+                        </app-inline-message>
+                    </mat-form-field>
+                </div>
+                <div class="col-6">
+                    <mat-label>Trạng Thái</mat-label>
+                    <select class="form-control mt-2" formControlName="trangThai" [value]="0">
+                        <option value="0">Hiệu Lực</option>
+                        <option value="1">Hết Hiệu Lực</option>
+                    </select>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+                <div class="">
+                    <button class="btn btn-success" (click)=" resetForm()">reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</mat-expansion-panel>
+<mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            {{'List of Danh Mục'}}
+        </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <div class="import-export">
+        <button class="btn btn-primary import">Import</button>
+        <button class="btn btn-primary export">Export</button>
+    </div>
+    <div class="table-responsive">
+        <div class="row d-flex w-100 ">
+            <form class="row" [formGroup]="formFind" (submit)="fin()">
+                <div class="col-3">
+                    <mat-form-field class="w-100 m-2" appearance="outline">
+                        <mat-label>Mã</mat-label>
+                        <input matInput type="text" formControlName="ma" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+
+                    <mat-form-field class="w-100 m-2" appearance="outline">
+                        <mat-label>Tên</mat-label>
+                        <input matInput type="text" formControlName="tenTv" />
+
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+                    <mat-label>Trạng Thái</mat-label>
+                    <select class="form-control mt-2" formControlName="trangThai">
+                        <option value="0">Hiệu Lực</option>
+                        <option value="1">Hết Hiệu Lực</option>
+                    </select>
+                </div>
+                <div class="col-3 ">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+            </form>
+
+        </div>
+        <ngx-datatable [ngClass]="'material'" [columnMode]="'flex'" [columns]="columns" rowHeight="auto"
+                       [count]="items.length" [offset]="page.pageNumber" [limit]="page.size" [headerHeight]="50"
+                       [footerHeight]="50" [rows]="items" [externalPaging]="false"
+                       [messages]="{emptyMessage: 'Không có dữ liệu', totalMessage: 'bản ghi'}"
+                       id="ExampleMaterialTable">
+            <ng-container *ngFor="let col of columns">
+                <ngx-datatable-column prop="{{ col.prop }}" name="{{ col.name }}" [flexGrow]="col.flexGrow">
+                    <ng-template let-column="column" ngx-datatable-header-template>
+                        {{ column.name }}
+                    </ng-template>
+                    <ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template let-row="row">
+                        <ng-container [ngSwitch]="col.prop">
+                            <ng-container *ngSwitchCase="'index'">
+                                {{ rowIndex + 1 + page.pageNumber * page.size }}
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'trangThai'">
+                                {{ value == 0 ? 'Hiệu Lực' : 'Hết Hiệu Lực' }}
+                            </ng-container>
+                            <ng-container *ngFor="let item of itemDM">
+                                <ng-container *ngSwitchCase="'maDm'">
+                                    {{ item.id == value ? item.tenTv : '' }}
+                                </ng-container>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="'actions'" class="text-center">
+                                <button class="btn btn-sm btn-outline-primary mg-r-2" type="button" title="Sửa"
+                                        (click)="edit(row)">
+                                    <span class="fe fe-edit-2">Sua</span>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger mg-l-2" type="button" title="Xóa"
+                                        (click)="delete(row.id)">
+                                    <span class="fe fe-trash-2">Xoa</span>
+                                </button>
+                            </ng-container>
+                            <!--                            <ng-container *ngFor="let item of itemsTG">-->
+                            <!--                                <ng-container *ngSwitchCase="'idTg'">-->
+                            <!--                                    {{ item.id == value ? item.ten : '' }}-->
+                            <!--                                </ng-container>-->
+                            <!--                            </ng-container>-->
+                            <!--                            <ng-container *ngFor="let item of itemNXB">-->
+                            <!--                                <ng-container *ngSwitchCase="'idNxb'">-->
+                            <!--                                    {{ item.id == value ? item.ten : '' }}-->
+                            <!--                                </ng-container>-->
+                            <!--                            </ng-container>-->
+                            <!--data execl-->
+
+                            <ng-container *ngSwitchDefault>
+                                <span title="{{ value }}">{{ value }}</span>
+                            </ng-container>
+                        </ng-container>
+                    </ng-template>
+                </ngx-datatable-column>
+            </ng-container>
+        </ngx-datatable>
+
+
+        <!--        <table id="ExampleMaterialTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8">-->
+        <!--            <ng-container matColumnDef="id">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> STT </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.id}} </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="maDm">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> Ma DM </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.maDm}} </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="ma">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> ma </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.ma}} </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="tenTv">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> ten </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.tenTv}} </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="tenEn">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> ten </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.tenEn}} </td>-->
+        <!--            </ng-container>-->
+        <!--&lt;!&ndash;            thuTu&ndash;&gt;-->
+        <!--            <ng-container matColumnDef="thuTu">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> thu tu </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.thuTu}} </td>-->
+        <!--            </ng-container>-->
+        <!--&lt;!&ndash;            nhom&ndash;&gt;-->
+        <!--            <ng-container matColumnDef="nhom">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> nhom </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.nhom}} </td>-->
+        <!--            </ng-container>-->
+        <!--&lt;!&ndash;            ngayhl&ndash;&gt;-->
+        <!--            <ng-container matColumnDef="ngayHl">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> ngay hl </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.ngayHl}} </td>-->
+        <!--            </ng-container>-->
+
+        <!--&lt;!&ndash;            ngayhhl&ndash;&gt;-->
+        <!--            <ng-container matColumnDef="ngayHhl">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> ngay hhl </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.ngayHhl}} </td>-->
+        <!--            </ng-container>-->
+        <!--            <ng-container matColumnDef="trangThai">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> trang thai </th>-->
+        <!--                <td mat-cell *matCellDef="let element"> {{element.trangThai}} </td>-->
+        <!--            </ng-container>-->
+        <!--&lt;!&ndash;            action&ndash;&gt;-->
+        <!--            <ng-container matColumnDef="actions">-->
+        <!--                <th mat-header-cell *matHeaderCellDef> Actions </th>-->
+        <!--                <td mat-cell *matCellDef="let element">-->
+        <!--                    <button mat-icon-button (click)="edit(element)">-->
+        <!--                        <mat-icon>edit</mat-icon>-->
+        <!--                    </button>-->
+        <!--                    <button mat-icon-button (click)="delete(element.id)">-->
+        <!--                        <mat-icon>delete</mat-icon>-->
+        <!--                    </button>-->
+        <!--                </td>-->
+        <!--            </ng-container>-->
+        <!--            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+        <!--            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+
+        <!--        </table>-->
+
+    </div>
+</mat-expansion-panel>
