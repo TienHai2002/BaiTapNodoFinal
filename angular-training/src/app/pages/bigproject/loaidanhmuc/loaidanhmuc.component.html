@@ -75,8 +75,8 @@
     </mat-expansion-panel-header>
     <!--    dialog -->
     <div class="import-export">
-        <button class="btn btn-primary import">Import</button>
-        <button class="btn btn-primary export">Export</button>
+        <input type="file" (change)="onFileChange($event)" multiple="false" />
+        <button class="btn btn-primary export" (click)="export()">Export</button>
     </div>
     <div class="table-responsive">
         <div class="row d-flex w-100 ">
@@ -167,8 +167,8 @@
 
     </mat-expansion-panel-header>
     <div class="import-export">
-        <button class="btn btn-primary import">Import</button>
-        <button class="btn btn-primary export">Export</button>
+        <input type="file" (change)="onFileChange($event)" multiple="false" />
+        <button class="btn btn-primary export" (click)="export()">Export</button>
     </div>
     <div class="row d-flex w-100 ">
         <form class="row" [formGroup]="formFind" (submit)="finDM()">
